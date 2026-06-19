@@ -15,7 +15,7 @@ public interface PageCountRepository extends JpaRepository<PageCount, String> {
     @Transactional
     @Query(
         value = "INSERT INTO page_counts (url, count) VALUES (:url, 1) " +
-                "ON CONFLICT (url) DO UPDATE SET count = page_counts.count + 1",
+                "ON DUPLICATE KEY UPDATE count = count + 1",
         nativeQuery = true
     )
     void upsertCount(@Param("url") String url);
